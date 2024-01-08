@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#main {
+    padding: 20px;
+    background-color: darkslateblue;
+    color: white;
+    margin: 10% auto;
+    width: 50%;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#main h1 {
+    font-size: 40px;
+    font-weight: 700;
+    font-style: italic;
+}
+
+#main button {
+    width: 100px;
+    background-color: white;
+    color: darkslateblue;
+    border-radius: 10px;
+    border-style: none;
+    padding: 5px;
+    margin: 20px;
+    font-weight: 600;
+}
