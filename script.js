@@ -3,35 +3,45 @@ function Turn(player, totalScore = 0) {
     this.turnScore = 0;
     this.totalScore = totalScore;
     
-    this.roll = function roll(dice) {
+    this.roll = function roll(dice = (6 - this.keptDice.length)) {
         // Rolls n six-sided dice, returns array of face values.
         const result = [];
         for (let i = 0; i < dice; i++) {
             result.push(Math.floor((Math.random() * 6)) + 1);
         }
-        this.tableDice = [result];
+        this.tableDice = [...result];
+        return result;
     }
-    
+
+    this.keep = function keep(...dice) {
+        if (this.tableDice.length === 0) return 'No dice rolled! Please roll(n) first';
+        if (dice.length === 0
+        || dice.length > 6) {
+            return 'Which dice to keep? Array of length 1-6.'
+        }
+        for (const value of dice) {
+            const idx = this.tableDice.indexOf(value);
+            this.keptDice.push(...this.tableDice.splice(idx, 1));
+        }
+    }
+
     this.tableDice = [];
     this.keptDice = [];
 }
 
 
-
-
-
-function multiRoll(dice, rolls) {
-    // Rolls n dice, x times. Returns an object with the total
-    // occurrences of each face value (1-6).
-    const result = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
-    for (let i = 0; i < rolls; i++) {
-        const thisRoll = roll(dice);
-        thisRoll.forEach(number => {
-            result[number] += 1
-        });
-    }
-    return result;
-}
+// function multiRoll(dice, rolls) {
+//     // Rolls n dice, x times. Returns an object with the total
+//     // occurrences of each face value (1-6).
+//     const result = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
+//     for (let i = 0; i < rolls; i++) {
+//         const thisRoll = roll(dice);
+//         thisRoll.forEach(number => {
+//             result[number] += 1
+//         });
+//     }
+//     return result;
+// }
 
 function displayObject(obj) {
     let result = '';
