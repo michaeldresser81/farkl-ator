@@ -20,6 +20,11 @@
     font-style: italic;
 }
 
+#main label {
+    display: block;
+    margin: 10px;
+}
+
 #main button {
     width: 100px;
     background-color: white;
