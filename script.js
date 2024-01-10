@@ -3,7 +3,7 @@ function Turn(player, totalScore = 0) {
     this.turnScore = 0;
     this.totalScore = totalScore;
     
-    this.roll = function roll(dice = (6 - this.keptDice.length)) {
+    this.roll = function (dice = (6 - this.keptDice.length)) {
         // Rolls n six-sided dice, returns array of dice values
         const result = [];
         for (let i = 0; i < dice; i++) {
@@ -13,7 +13,30 @@ function Turn(player, totalScore = 0) {
         return result;
     }
 
-    this.keep = function keep(dice) {
+    this.assess = function (roll) {
+        let hasMultiple = false;
+        let spare1s = 0;
+        let spare5s = 0;
+        const tally = {};
+        for (value of roll) {
+            if (tally[value]) {
+                tally[value] += 1;
+            }
+            else {
+                tally[value] = 1;
+            }
+        }
+        console.log(tally);
+        const sorted = Object.values(tally).length > 1
+                        ? Object.values(tally).sort((a,b) => b-a)
+                        : Object.values(tally);
+        console.log(sorted);
+        if (sorted[0] >= 3) hasMultiple = true;
+        console.log(`hasMultiple: ${hasMultiple}`);
+        
+    }
+
+    this.keep = function (dice) {
         // accepts an array of dice values to move from tableDice to keptDice
         if (this.tableDice.length === 0) return 'No dice rolled! Please roll(n) first';
         if (dice.length === 0
@@ -30,7 +53,7 @@ function Turn(player, totalScore = 0) {
     this.tableDice = [];
     this.keptDice = [];
 
-    this.score = function score(dice) {
+    this.score = function (dice) {
         /*
         Single 1 = 100      Four of any number = 1000
         Single 5 = 50       Five of any number = 2000
