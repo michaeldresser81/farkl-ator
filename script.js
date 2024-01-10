@@ -47,7 +47,7 @@ function Turn(player, totalScore = 0) {
         });
         console.log(tally);
         let rollScore = 0;
-        // sort tallies in descending order; for 1 die the count is 1
+        // sort tallies in descending order; for 1 die the highest count is 1
         const highestMultiple = dice.length === 1
             ? 1
             : Object.values(tally).sort((a, b) => b - a);
