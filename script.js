@@ -14,7 +14,7 @@ function Turn(player, totalScore = 0) {
     }
 
     this.assess = function (roll) {
-        let hasMultiple = false;
+        let hasMultiple = ''; // "multiple" meaning triple or better
         let spare1s = 0;
         let spare5s = 0;
         const tally = {};
@@ -31,8 +31,39 @@ function Turn(player, totalScore = 0) {
                         ? Object.values(tally).sort((a,b) => b-a)
                         : Object.values(tally);
         console.log(sorted);
-        if (sorted[0] >= 3) hasMultiple = true;
+        if (sorted[0] === 3) {
+            hasMultiple = sorted[1] === 3 ? 'double-triple' : 'triple';
+        }
+        if (sorted[0] === 4) {
+            hasMultiple = sorted[1] === 2 ? 'four&pair' : 'four';
+        }
+        if (sorted[0] === 2 && sorted[1] === 2 & sorted[2] === 2) {
+            hasMultiple = 'three-pair';
+        }
+        if (sorted[0] === 1 && Object.values(tally).length === 6) {
+            hasMultiple = 'straight';
+        }
+        switch (hasMultiple) {     // these use six dice, there can be no spares
+            case 'double-triple':
+            case 'four&pair':
+            case 'three-pair':
+            case 'straight':
+                delete tally['1'];
+                delete tally['5'];
+                break;
+            case 'four':
+                if (tally['1'] === 4) delete tally['1'];
+                if (tally['5'] === 4) delete tally['5'];
+                break;
+            case 'triple':
+                if (tally['1'] === 3) delete tally['1'];
+                if (tally['5'] === 3) delete tally['5'];
+                break;
+        }
+        if (tally['1'] < 3) spare1s = tally['1'];
+        if (tally['5'] < 3) spare5s = tally['5'];
         console.log(`hasMultiple: ${hasMultiple}`);
+        console.log(`spare1s: ${spare1s}, spare5s: ${spare5s}`);
         
     }
 
