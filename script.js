@@ -1,7 +1,11 @@
-function Turn(player, totalScore = 0) {
+function Player(name) {
+    this.name = name;
+    this.totalScore = 0;
+}
+
+function Turn(player) {
     this.player = player;
     this.turnScore = 0;
-    this.totalScore = totalScore;
     
     this.roll = function (dice = (6 - this.keptDice.length)) {
         // Rolls n six-sided dice, returns array of dice values
@@ -27,10 +31,12 @@ function Turn(player, totalScore = 0) {
             }
         }
         console.log(tally);
+        // Looking at the tally sorted in descending order, the first elements
+        // will let us deduce which multiples if any are present
         const sorted = Object.values(tally).length > 1
                         ? Object.values(tally).sort((a,b) => b-a)
                         : Object.values(tally);
-        console.log(sorted);
+        console.log(sorted); 
         if (sorted[0] === 3) {
             hasMultiple = sorted[1] === 3 ? 'double-triple' : 'triple';
         }
@@ -43,7 +49,7 @@ function Turn(player, totalScore = 0) {
         if (sorted[0] === 1 && Object.values(tally).length === 6) {
             hasMultiple = 'straight';
         }
-        switch (hasMultiple) {     // these use six dice, there can be no spares
+        switch (hasMultiple) {     // these multiples use six dice, there can be no spares
             case 'double-triple':
             case 'four&pair':
             case 'three-pair':
@@ -51,7 +57,7 @@ function Turn(player, totalScore = 0) {
                 delete tally['1'];
                 delete tally['5'];
                 break;
-            case 'four':
+            case 'four':         // remove triples and quadruples from tally if 1 or 5
                 if (tally['1'] === 4) delete tally['1'];
                 if (tally['5'] === 4) delete tally['5'];
                 break;
@@ -155,6 +161,10 @@ function Turn(player, totalScore = 0) {
          return rollScore;
         
     
+    }
+    this.end = function () {
+        player.totalScore += this.turnScore;
+        return
     }
 }
 
