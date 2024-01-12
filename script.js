@@ -8,7 +8,7 @@ function Turn(player) {
     this.score = 0;
     
     this.roll = function (dice = (6 - this.keptDice.length)) {
-        // Rolls n six-sided dice, returns array of dice values
+        // Rolls n six-sided dice, returns an array of dice values
         const result = [];
         for (let i = 0; i < dice; i++) {
             result.push(Math.floor((Math.random() * 6)) + 1);
