@@ -18,7 +18,7 @@ function Turn(player) {
     }
 
     this.assess = function (roll) {
-        // Accepts and array of dice values, creates an object with tallies
+        // Accepts an array of dice values, creates an object with tallies
         // {'1': 2, '2': 2, '6':1} and uses these tallies to assess combinations
         // with point value (multiples or "spare" 1s and 5s)
 
